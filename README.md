@@ -1,5 +1,7 @@
 # jQuery File Upload
 
+This is a fork of the original to add 2 extra functions: move files up or down in the list and select a set of files to cancel the upload.
+
 ## Contents
 
 - [Description](#description)
