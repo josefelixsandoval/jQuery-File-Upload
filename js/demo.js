@@ -11,8 +11,20 @@
 
 /* global $ */
 
+var myData;
+
 $(function () {
   'use strict';
+
+  $('.up,.down').on('click', function() {
+    var row = $(this).parents('tr:first');
+
+    if ($(this).is('.up')) {
+      row.insertBefore(row.prev());
+    } else {
+      row.insertAfter(row.next());
+    }
+  });
 
   // Initialize the jQuery File Upload widget:
   $('#fileupload').fileupload({
@@ -72,4 +84,20 @@ $(function () {
           .call(this, $.Event('done'), { result: result });
       });
   }
+
+  $('#fileupload').on('fileuploadadd', function (e, data) {
+    myData = data;
+    console.log(e, data);
+
+    // TODO: prevent adding the same file...
+  });
+
+  $('#fileupload').on('fileuploadchange', function (e, data) {
+    console.log('fileuploadchange');
+    // console.log(data.originalFiles);
+  });
+
+  $('#fileupload').on('fileuploadfail', function (e, data) {
+    console.log('fileuploadfail', e, data);
+  });
 });

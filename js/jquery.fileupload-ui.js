@@ -621,8 +621,20 @@
     },
 
     _initButtonBarEventHandlers: function () {
+      // Init cancel-selected
+      this._on(this.element.find('.cancel-selected'), {
+        click: function(e) {
+          e.preventDefault();
+
+          $('.select-to-cancel:checkbox:checked').each(function() {
+            $(this).addClass('cancel').click();
+          });
+        }
+      });
+
       var fileUploadButtonBar = this.element.find('.fileupload-buttonbar'),
         filesList = this.options.filesContainer;
+
       this._on(fileUploadButtonBar.find('.start'), {
         click: function (e) {
           e.preventDefault();
@@ -667,13 +679,31 @@
 
     _initEventHandlers: function () {
       this._super();
+
       this._on(this.options.filesContainer, {
         'click .edit': this._editHandler,
         'click .start': this._startHandler,
         'click .cancel': this._cancelHandler,
-        'click .delete': this._deleteHandler
+        'click .delete': this._deleteHandler,
+        'click .down': this._downHandler,
+        'click .up': this._upHandler,
       });
+      
       this._initButtonBarEventHandlers();
+    },
+
+    _downHandler: function (e) {
+      e.preventDefault();
+
+      var row = $(e.currentTarget).parents('tr:first');
+      row.insertAfter(row.next());
+    },
+
+    _upHandler: function (e) {
+      e.preventDefault();
+
+      var row = $(e.currentTarget).parents('tr:first');
+      row.insertBefore(row.prev());
     },
 
     _destroyEventHandlers: function () {
