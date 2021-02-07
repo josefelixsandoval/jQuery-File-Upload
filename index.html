@@ -109,8 +109,8 @@
             <span class="btn btn-success fileinput-button">
               <i class="glyphicon glyphicon-plus"></i>
               <span>Add files...</span>
-              <input id="files" type="file" name="files[]" multiple />
-            </span>
+              <input type="file" name="files[]" multiple />
+              </span>
             <button type="submit" class="btn btn-primary start">
               <i class="glyphicon glyphicon-upload"></i>
               <span>Start upload</span>
@@ -119,9 +119,17 @@
               <i class="glyphicon glyphicon-ban-circle"></i>
               <span>Cancel upload</span>
             </button>
-
-
+            <button type="button" class="btn btn-danger delete">
+              <i class="glyphicon glyphicon-trash"></i>
+              <span>Delete selected</span>
+            </button>
             <input type="checkbox" class="toggle" />
+
+            <button type="button" class="btn btn-danger cancel-selected">
+              <i class="glyphicon glyphicon-trash"></i>
+              <span>Cancel Upload of Selected Files</span>
+            </button>
+
             <!-- The global file processing state -->
             <span class="fileupload-process"></span>
           </div>
@@ -147,13 +155,31 @@
         <table role="presentation" class="table table-striped">
           <tbody class="files"></tbody>
         </table>
-
-          <button type="button" class="btn btn-danger cancel-selected">
-            <i class="glyphicon glyphicon-trash"></i>
-            <span>MY CUSTOM CANCEL UPLOADS</span>
-          </button>
-
       </form>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Addition to the original</h3>
+        </div>
+        <div class="panel-body">
+          <ul>
+            <li>
+              If you need to move files up or down in the queue, you can do that now by adding a class (up or down)
+            </li>
+
+            <li>
+              In some case a user would want to cancel a set of files (not one by one or all at once). This version adds a checkbox to each file 
+              and lets users select the file(s) to cancel cancel the upload.
+            </li>
+
+              <li>
+                <p>The functionality looks like this:<p>
+                <img src="img/UpDownCancelSelected.gif">
+              </li>           
+            </ul>
+        </div>
+      </div>
+
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">Demo Notes</h3>
@@ -241,43 +267,14 @@
       <ol class="indicator"></ol>
     </div>
 
-    <table border="1">
-      <tr>
-        <td>
-          r1-one 
-          <button type="button" class="down">DONWN</button>
-          <button type="button" class="up">UP</button>
-        </td>
-        <td>r1-two</td>
-      </tr>
-      <tr>
-        <td>r2-one</td>
-        <td>r2-two</td>
-      </tr>
-      <tr>
-        <td>r3-one</td>
-        <td>r3-two</td>
-      </tr>
-      <tr>
-        <td>r4-one</td>
-        <td>r4-two</td>
-      </tr>
-      <tr>
-        <td>r5-one</td>
-        <td>r5-two</td>
-      </tr>
-      <tr>
-        <td>r6-one</td>
-        <td>r6-two</td>
-      </tr>
-    </table>
-
     <!-- The template to display files available for upload -->
     <script id="template-upload" type="text/x-tmpl">
       {% for (var i=0, file; file=o.files[i]; i++) { %}
           <tr class="template-upload fade{%=o.options.loadImageFileTypes.test(file.type)?' image':''%}">
               <td>
                 <input type="checkbox" class="select-to-cancel">  <button type="button" class="down">DOWN</button> <button type="button" class="up">UP</button>
+
+                <span class="preview"></span>
               </td>
               <td>
                   <p class="name">{%=file.name%}</p>
